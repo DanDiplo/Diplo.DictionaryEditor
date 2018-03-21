@@ -1,0 +1,59 @@
+﻿<div ng-controller="DiploDictionaryExportController">
+
+    <umb-editor-view footer="false">
+
+        <div class="umb-editor-header umb-panel-header">
+            <div class="umb-panel-header-content-wrapper">
+                <div class="umb-panel-header-content">
+                    <div class="umb-panel-header-left-side">
+
+                        <div class="umb-panel-header-title-wrapper">
+                            <div class="umb-panel-header-name">
+                                Dictionary Exporter
+                            </div>
+
+                            <div class="umb-panel-header-description">
+                                Export dictionary items to CSV
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="umb-panel-header-right-side">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <umb-editor-container>
+
+            <h3>Overview</h3>
+
+            <p>You can export the entire dictionary to a <a href="https://en.wikipedia.org/wiki/Comma-separated_values" target="_blank" title="Comma Separated Values file">CSV file</a> that you can then edit in spreadsheet editing software, such as <a href="https://support.office.com/en-ie/article/import-or-export-text-txt-or-csv-files-5250ac4c-663c-47ce-937b-339e391393ba" target="_blank">Microsoft Excel</a> or <a href="https://support.google.com/docs/answer/40608?co=GENIE.Platform%3DDesktop" target="_blank">Google Sheets</a></p>
+
+            <p>You can then upload the edited CSV file to import it back into Umbraco using the <a href="#/diploDictionaryEdit/diploDictEditor/import/csv">Import Dictionary</a> facility.</p>
+
+            <p>
+                <a href="/umbraco/backoffice/DiploDictionary/DictionaryCsv/ExportAsCsv" class="btn btn-primary" target="_blank">Download CSV File</a>
+            </p>
+
+            <hr />
+
+            <h4>Editing Help</h4>
+
+            <p>
+                When you download your CSV file it will have six columns - you should <em>only</em> update the last column called <strong>Translation</strong>.
+                It is important you leave all other columns <em>exactly</em> as they are otherwise you won't be able to reimport it.
+                Only use plain text and keep the text limit to a few hundred characters at most.
+            </p>
+            <p>
+                Note that you cannot add new values to the import list - it won't create new entries. It is only for updating existing values.
+            </p>
+            <p>
+
+            </p>
+
+        </umb-editor-container>
+
+    </umb-editor-view>
+</div>

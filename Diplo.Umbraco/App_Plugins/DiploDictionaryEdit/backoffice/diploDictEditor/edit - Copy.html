@@ -1,0 +1,74 @@
+﻿<div ng-controller="DiploDictionaryEditorController">
+
+    <umb-header>
+        <h1>
+            <span class="umb-panel-header-name">Dicitonary Editor</span>
+        </h1>
+
+    </umb-header>
+
+
+    <div class="umb-panel-body">
+
+        <div class="umb-pane">
+
+            <div class="umb-sub-header">
+                <h3>Edit Dictionary</h3>
+            </div>
+
+            <umb-load-indicator ng-show="isLoading"></umb-load-indicator>
+
+            <form class="form-horizontal" id="dictForm">
+
+                <div ng-repeat="entry in dictionary" class="accordion-group">
+
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#dictForm" href="#collapse-{{entry.Id}}">
+                            <strong ng-style="entry.ParentId === null && {'font-size':'larger'}">{{ entry.ItemKey }}</strong>
+                        </a>
+                    </div>
+
+                    <div id="collapse-{{entry.Id}}" class="accordion-body collapse">
+                        <div class="accordion-inner">
+
+                            <div ng-repeat="translation in entry.Translations">
+
+                                <div class="control-group">
+                                    <label class="control-label"><span ng-style="translation.IsUpdated && {'color':'#35c786'}">{{ translation.Language.CultureName }}</span></label>
+                                    <div class="controls">
+                                        <textarea class="input-xxlarge" ng-model="translation.Value" ng-change="translation.IsUpdated = true">{{ translation.Value }}</textarea>
+                                        <code>{{translation.IsUpdated}}</code>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <div class="umb-tab-buttons umb-editor-drawer">
+
+        <div class="umb-editor-drawer-content">
+
+
+
+            <div class="umb-editor-drawer-content__left-side">
+
+            </div>
+
+            <div class="umb-editor-drawer-content__right-side">
+                <button class="btn btn-primary" ng-click="vm.save()">Save Changes</button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
