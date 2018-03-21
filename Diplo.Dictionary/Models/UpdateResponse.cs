@@ -14,6 +14,7 @@ namespace Diplo.Dictionary.Models
         public UpdateResponse()
         {
             this.Errors = new List<string>();
+            this.Warnings = new List<string>();
         }
 
         public bool IsSuccess { get; set; }
@@ -25,5 +26,9 @@ namespace Diplo.Dictionary.Models
         public List<string> Errors { get; set; }
 
         public bool HasErrors => this.Errors != null && this.Errors.Any();
+
+        public List<string> Warnings { get; set; }
+
+        public bool HasWarnings => this.Warnings != null && this.Warnings.Any();
     }
 }

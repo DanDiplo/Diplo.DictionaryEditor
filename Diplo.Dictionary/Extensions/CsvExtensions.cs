@@ -21,7 +21,7 @@ namespace Diplo.Dictionary.Extensions
         /// </summary>
         /// <param name="dictionaryItems">The dictionary to convert</param>
         /// <returns>The CSV file contents</returns>
-        public static string ToCsv(this IEnumerable<DictItem> dictionaryItems)
+        public static string ToCsv(this IEnumerable<DictItem> dictionaryItems, int? lang = null)
         {
             var dictionary = dictionaryItems.SelectMany(d => d.Translations);
 
@@ -30,7 +30,7 @@ namespace Diplo.Dictionary.Extensions
 
             foreach (var dict in dictionaryItems)
             {
-                foreach (var item in dict.Translations)
+                foreach (var item in dict.Translations.Where(l => lang.HasValue && lang.Value == l.Language.Id || lang == null))
                 {
                     csv.AppendFormat("{0},{1},{2},{3},\"{4}\",\"{5}\"\n", 
                         item.Id, 

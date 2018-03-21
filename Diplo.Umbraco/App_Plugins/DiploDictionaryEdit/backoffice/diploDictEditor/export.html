@@ -29,13 +29,24 @@
 
             <h3>Overview</h3>
 
-            <p>You can export the entire dictionary to a <a href="https://en.wikipedia.org/wiki/Comma-separated_values" target="_blank" title="Comma Separated Values file">CSV file</a> that you can then edit in spreadsheet editing software, such as <a href="https://support.office.com/en-ie/article/import-or-export-text-txt-or-csv-files-5250ac4c-663c-47ce-937b-339e391393ba" target="_blank">Microsoft Excel</a> or <a href="https://support.google.com/docs/answer/40608?co=GENIE.Platform%3DDesktop" target="_blank">Google Sheets</a></p>
+            <p>You can export the entire dictionary (or just enteries for a specific language) to a <a href="https://en.wikipedia.org/wiki/Comma-separated_values" target="_blank" title="Comma Separated Values file">CSV file</a> that you can then edit in spreadsheet editing software, such as <a href="https://support.office.com/en-ie/article/import-or-export-text-txt-or-csv-files-5250ac4c-663c-47ce-937b-339e391393ba" target="_blank">Microsoft Excel</a> or <a href="https://support.google.com/docs/answer/40608?co=GENIE.Platform%3DDesktop" target="_blank">Google Sheets</a></p>
 
             <p>You can then upload the edited CSV file to import it back into Umbraco using the <a href="#/diploDictionaryEdit/diploDictEditor/import/csv">Import Dictionary</a> facility.</p>
 
-            <p>
-                <a href="/umbraco/backoffice/DiploDictionary/DictionaryCsv/ExportAsCsv" class="btn btn-primary" target="_blank">Download CSV File</a>
-            </p>
+            <p>Please select the language you wish to export for or leave at 'All Languages' to export all items:</p>
+
+            <form>
+                <label class="control-label" for="diplo-dict-language">Export for Language:</label>
+                <br />
+                <select ng-model="language" id="diplo-dict-language" ng-options="lang.CultureName for lang in languages">
+                    <option value="">All Languages</option>
+                </select>
+
+                <p>
+                    <a href="/umbraco/backoffice/DiploDictionary/DictionaryCsv/ExportAsCsv?lang={{language.Id}}" class="btn btn-primary" target="_blank">Download CSV File</a>
+                </p>
+
+            </form>
 
             <hr />
 

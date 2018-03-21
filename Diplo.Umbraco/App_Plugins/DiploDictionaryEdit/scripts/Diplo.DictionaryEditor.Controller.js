@@ -8,7 +8,6 @@
             $scope.orderByOptions = [ 'Default', 'Alphabetic' ];
             $scope.criteria.orderby = "Default";
             $scope.criteria.language = null;
-
             $scope.isLoading = true;
 
             diploDictionaryResources.getEntireDictionary().then(function (response) {
@@ -28,6 +27,8 @@
 
             $scope.submit = function () {
 
+                $scope.isLoading = true;
+
                 diploDictionaryResources.updateDictionary($scope.dictionary).then(function (response) {
 
                     if (response.IsSuccess) {
@@ -36,11 +37,13 @@
                         notificationsService.warning("Warning", response.Message);
                     }
 
+                    $scope.isLoading = false;
+
                 }, function (response) {
                     notificationsService.error("Error", response);
+                    $scope.isLoading = false;
                 });
             };
-
 
         });
 })();

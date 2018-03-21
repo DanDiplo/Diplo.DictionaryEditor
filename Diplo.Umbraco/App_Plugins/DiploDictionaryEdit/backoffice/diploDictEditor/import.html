@@ -78,6 +78,17 @@
                         <li ng-repeat="error in response.Update.Errors track by $index">{{error}}</li>
                     </ul>
                 </div>
+
+                <div ng-if="response.Update.HasWarnings">
+                    <h4>Import Warnings ({{response.Update.Warnings.length}})</h4>
+                    <div class="alert alert-warning">
+                        Whilst the import was succesfull some items could not be imported (normally this is because the item with the Id no longer exists):
+                    </div>
+                    <ul>
+                        <li ng-repeat="warning in response.Update.Warnings track by $index">{{warning}}</li>
+                    </ul>
+                </div>
+
             </div>
 
         </umb-editor-container>

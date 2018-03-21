@@ -28,11 +28,11 @@ namespace Diplo.Dictionary.Controllers
         /// </summary>
         /// <returns>A file result</returns>
         [System.Web.Http.HttpGet]
-        public IHttpActionResult ExportAsCsv()
+        public IHttpActionResult ExportAsCsv(int? lang)
         {
             var dictionaryService = new DictionaryDataService(ApplicationContext);
 
-            var csv = dictionaryService.GetAllDictionaryItemsSorted().ToCsv();
+            var csv = dictionaryService.GetAllDictionaryItemsSorted().ToCsv(lang);
 
             string fileName = "dictionary-" + DateTime.Today.ToString("yyyyMMdd") + ".csv";
 

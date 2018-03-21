@@ -77,6 +77,11 @@ namespace Diplo.Dictionary.Services
             return UpdateDtoItems(dtos);
         }
 
+        /// <summary>
+        /// Updates the given language/text DTOs
+        /// </summary>
+        /// <param name="dtos">The DTOs to update</param>
+        /// <returns>An Update Response</returns>
         public UpdateResponse UpdateDtoItems(IEnumerable<LanguageTextDto> dtos)
         {
             UpdateResponse response = new UpdateResponse();
@@ -95,8 +100,16 @@ namespace Diplo.Dictionary.Services
             {
                 try
                 {
-                    db.Update(dto);
-                    response.UpdateCount++;
+                    int id = db.Update(dto);
+
+                    if (id > 0)
+                    {
+                        response.UpdateCount++;
+                    }
+                    else
+                    {
+                        response.Warnings.Add($"Couldn't update database for row Id '{dto.PrimaryKey}' - it may no longer exist.");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -119,7 +132,7 @@ namespace Diplo.Dictionary.Services
                 LogHelper.Warn<DictionaryDataService>(response.Message);
             }
 
-            this.isolatedRuntimeCache.ClearCache<ILanguage>();
+            this.isolatedRuntimeCache.ClearCache<IDictionaryItem>(); // need to clear dictionary cache on updates
 
             return response;
         }

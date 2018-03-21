@@ -56,7 +56,7 @@
                 <div ng-repeat="entry in dictionary | filter: criteria.search | orderBy: criteria.orderby === 'Default' ? null : 'ItemKey'" class="accordion-group">
 
                     <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#dictForm" href="#collapse-{{entry.Id}}">
+                        <a class="accordion-toggle" ng-style="entry.ParentId !== null && {'margin-left':'6px'}"  data-toggle="collapse" data-parent="#dictForm" href="#collapse-{{entry.Id}}">
                             <strong ng-style="entry.ParentId === null && {'font-size':'larger'}">{{ entry.ItemKey }}</strong>
                         </a>
                     </div>
@@ -79,7 +79,6 @@
             </umb-editor-container>
 
             <umb-editor-footer>
-
                 <umb-editor-footer-content-left>
                     <p>When you have finished editing click 'Save Changes' to update the edited items.</p>
                 </umb-editor-footer-content-left>
@@ -87,8 +86,8 @@
                 <umb-editor-footer-content-right>
                     <button class="btn btn-primary" ng-click="submit()">Save Changes</button>
                 </umb-editor-footer-content-right>
-
             </umb-editor-footer>
+
         </umb-editor-view>
     </form>
 </div>
