@@ -52,17 +52,27 @@
 
             <h4>Editing Help</h4>
 
-            <p>
-                When you download your CSV file it will have six columns - you should <em>only</em> update the last column called <strong>Translation</strong>.
-                It is important you leave all other columns <em>exactly</em> as they are otherwise you won't be able to reimport it.
-                Only use plain text and keep the text limit to a few hundred characters at most.
-            </p>
-            <p>
-                Note that you cannot add new values to the import list - it won't create new entries. It is only for updating existing values.
-            </p>
-            <p>
+            <ul>
+                <li>
+                    When you download your CSV file it will have exactly six columns - you should <em>only</em> update the last column called <strong>Translation</strong>.
+                    It is very important you leave all other columns <em>exactly</em> as they are otherwise you won't be able to reimport your file.
+                <li>
+                    Only use plain text (ie. don't embed HTML markup and avoid newlines) and keep the text limit to a few hundred characters at most for each entry.
+                </li>
+                <li>
+                    Note that you <em>cannot</em> add new values to the import list - it won't create new entries. It is only for updating existing values.
+                </li>
+                <li>
+                    When you edit your CSV file remember to save it back as CSV (Comma Separated Values) with a <strong>.csv</strong> extension. You can only import .csv and not native Excel sheets.
+                </li>
+                <li>
+                    When uploading an edited file we'll validate the format and reject any bad entries.
+                </li>
+                <li>
+                    Once finished you can use the <a href="#/diploDictionaryEdit/diploDictEditor/import/csv">Import Dictionary</a> option to load it back into Umbraco.
+                </li>
+            </ul>
 
-            </p>
 
         </umb-editor-container>
 

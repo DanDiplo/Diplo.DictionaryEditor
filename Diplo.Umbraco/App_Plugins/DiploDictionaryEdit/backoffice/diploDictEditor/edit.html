@@ -1,16 +1,11 @@
 ﻿<div ng-controller="DiploDictionaryEditorController">
 
-    <umb-load-indicator ng-if="isLoading"></umb-load-indicator>
-
-    <form name="contentForm">
-
-        <umb-editor-view ng-if="!isLoading">
-
+    <form>
+        <umb-editor-view>
             <div class="umb-editor-header umb-panel-header">
                 <div class="umb-panel-header-content-wrapper">
                     <div class="umb-panel-header-content">
                         <div class="umb-panel-header-left-side">
-
                             <div class="umb-panel-header-title-wrapper">
                                 <div class="umb-panel-header-name">
                                     Dictionary Editor
@@ -23,7 +18,6 @@
                         </div>
 
                         <div class="umb-panel-header-right-side">
-
                             <div class="row">
                                 <div class="span4">
                                     <label class="control-label" for="diplo-dict-search">Search Keys:</label>
@@ -45,42 +39,42 @@
                                     <select ng-model="criteria.orderby" id="diplo-dict-orderby" ng-options="name for name in orderByOptions"></select>
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
 
             <umb-editor-container>
-                <div ng-repeat="entry in dictionary | filter: criteria.search | orderBy: criteria.orderby === 'Default' ? null : 'ItemKey'" class="accordion-group">
+                <umb-load-indicator ng-if="isLoading"></umb-load-indicator>
 
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" ng-style="entry.ParentId !== null && {'margin-left':'6px'}"  data-toggle="collapse" data-parent="#dictForm" href="#collapse-{{entry.Id}}">
-                            <strong ng-style="entry.ParentId === null && {'font-size':'larger'}">{{ entry.ItemKey }}</strong>
-                        </a>
-                    </div>
+                <div ng-if="!isLoading">
+                    <div ng-repeat="entry in dictionary | filter: criteria.search | orderBy: criteria.orderby === 'Default' ? null : 'ItemKey'" class="accordion-group" id="dictForm">
 
-                    <div id="collapse-{{entry.Id}}" class="accordion-body collapse">
-                        <div class="accordion-inner">
+                        <div class="accordion-heading" style="background-color:#fbfbfb">
+                            <a class="accordion-toggle" ng-style="entry.ParentId !== null && criteria.orderby === 'Default'  && {'margin-left':'6px'}" data-toggle="collapse" data-parent="#dictForm" href="#collapse-{{entry.Id}}">
+                                <strong ng-style="entry.ParentId === null && {'font-size':'larger'}">{{ entry.ItemKey }}</strong>
+                            </a>
+                        </div>
 
-                            <div ng-repeat="translation in entry.Translations">
-                                <div class="control-group" ng-hide="criteria.language !== null && translation.Language.Key !== criteria.language.Key">
-                                    <label class="control-label"><span ng-style="translation.IsUpdated && {'color':'#35c786'}" title="{{translation.Language.IsoCode}}">{{ translation.Language.CultureName }}</span></label>
-                                    <div class="controls">
-                                        <textarea class="input-xxlarge" ng-model="translation.Value" ng-change="translation.IsUpdated = true">{{ translation.Value }}</textarea>
+                        <div id="collapse-{{entry.Id}}" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <div ng-repeat="translation in entry.Translations">
+                                    <div class="control-group" ng-hide="criteria.language !== null && translation.Language.Key !== criteria.language.Key">
+                                        <label class="control-label"><span ng-style="translation.IsUpdated && {'color':'#35c786'}" title="{{translation.Language.IsoCode}}">{{ translation.Language.CultureName }}</span></label>
+                                        <div class="controls">
+                                            <textarea class="input-xxlarge" ng-model="translation.Value" ng-change="translation.IsUpdated = true" maxlength="900" placeholder="Add translation here">{{ translation.Value }}</textarea>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </umb-editor-container>
 
-            <umb-editor-footer>
+            <umb-editor-footer ng-if="!isLoading">
                 <umb-editor-footer-content-left>
-                    <p>When you have finished editing click 'Save Changes' to update the edited items.</p>
+                    <p>Click an item to view languages. When you have finished editing click 'Save Changes' to update all edited items.</p>
                 </umb-editor-footer-content-left>
 
                 <umb-editor-footer-content-right>

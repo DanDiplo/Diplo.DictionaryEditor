@@ -9,7 +9,7 @@ namespace Diplo.Dictionary.Sections
     internal class DashboardConfigurator
     {
         /// <summary>
-        /// Attemps to add a new custom dashboard section - hacky!
+        /// Attemps to add a new custom dashboard section to Dashboard.config XML file - hacky!
         /// </summary>
         /// <remarks>
         /// This is hacky, but can't see a better way ATM as no API for this....

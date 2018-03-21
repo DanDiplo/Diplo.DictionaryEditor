@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Web.Http;
+using Diplo.Dictionary.Models;
+using Diplo.Dictionary.Models.Json;
 using Diplo.Dictionary.Sections;
-using Umbraco.Core;
+using Diplo.Dictionary.Services;
 using Umbraco.Web.Editors;
 using Umbraco.Web.Mvc;
 using Umbraco.Web.WebApi.Filters;
-using Umbraco.Core.Models;
-using System.Web.Http;
-using Newtonsoft.Json;
-using Diplo.Dictionary.Models.Json;
-using Diplo.Dictionary.Extensions;
-using Diplo.Dictionary.Models;
-using Diplo.Dictionary.Services;
 
 namespace Diplo.Dictionary.Controllers
 {
@@ -23,15 +18,23 @@ namespace Diplo.Dictionary.Controllers
     [PluginController(DiploConstants.PluginName)]
     public class DictionaryEditorController : UmbracoAuthorizedJsonController
     {
+        private readonly DictionaryDataService dictionaryService;
+
+        /// <summary>
+        /// Instantiates the controller and configures the dictionary data service
+        /// </summary>
+        public DictionaryEditorController()
+        {
+            this.dictionaryService = new DictionaryDataService(ApplicationContext);
+        }
+
         /// <summary>
         /// Endpoint to gets all dictionary and translation values (sorted correctly!)
         /// </summary>
         /// <returns>An array of dictionary items as JSON</returns>
         public IEnumerable<DictItem> GetEntireDictionary()
         {
-            DictionaryDataService dictionaryService = new DictionaryDataService(ApplicationContext);
-
-            return dictionaryService.GetAllDictionaryItemsSorted();
+            return this.dictionaryService.GetAllDictionaryItemsSorted();
         }
 
         /// <summary>
@@ -53,18 +56,16 @@ namespace Diplo.Dictionary.Controllers
                 };
             }
 
-            DictionaryDataService dictionaryService = new DictionaryDataService(ApplicationContext);
-
-            return dictionaryService.UpdateChangedDictionaryItems(dictionary);
+            return this.dictionaryService.UpdateChangedDictionaryItems(dictionary);
         }
 
         /// <summary>
         /// Endpoint to get all configured lanaguages
         /// </summary>
         /// <returns>A list of languages as JSON</returns>
-        public IEnumerable<ILanguage> GetLanguages()
+        public IEnumerable<DictLang> GetLanguages()
         {
-            return Services.LocalizationService.GetAllLanguages() ?? Enumerable.Empty<ILanguage>();
+            return this.dictionaryService.GetAllLanguages();
         }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Diplo.Dictionary.Extensions;
 using Diplo.Dictionary.Models;
 using Diplo.Dictionary.Models.Json;
@@ -16,6 +14,9 @@ using Umbraco.Web;
 
 namespace Diplo.Dictionary.Services
 {
+    /// <summary>
+    /// Service for retrieving and updating dicitonary related data
+    /// </summary>
     public class DictionaryDataService
     {
         private readonly ApplicationContext appContext;
@@ -23,6 +24,10 @@ namespace Diplo.Dictionary.Services
         private readonly IsolatedRuntimeCache isolatedRuntimeCache;
         private readonly Database db;
 
+        /// <summary>
+        /// Instantiates the Dictionary Data Service with the application context
+        /// </summary>
+        /// <param name="applicationContext">The Umbraco Application Context</param>
         public DictionaryDataService(ApplicationContext applicationContext)
         {
             this.appContext = applicationContext ?? throw new ArgumentNullException(nameof(applicationContext));
@@ -55,6 +60,15 @@ namespace Diplo.Dictionary.Services
             }
 
             return sortedList.ToDictionaryItems();
+        }
+
+        /// <summary>
+        /// Gets all available languages
+        /// </summary>
+        /// <returns>A list of languages</returns>
+        public IEnumerable<DictLang> GetAllLanguages()
+        {
+            return this.localisationService.GetAllLanguages()?.Select(l => l.ToDictLang()) ?? Enumerable.Empty<DictLang>();
         }
 
         /// <summary>

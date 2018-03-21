@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Diplo.Dictionary.Models
 {
+    /// <summary>
+    /// Represents a single row in a CSV export
+    /// </summary>
     public class CsvRow
     {
         public int Id { get; set; }

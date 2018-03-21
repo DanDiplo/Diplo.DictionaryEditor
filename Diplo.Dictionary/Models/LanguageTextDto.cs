@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Umbraco.Core.Persistence;
 using Umbraco.Core.Persistence.DatabaseAnnotations;
 
 namespace Diplo.Dictionary.Models
 {
     /// <summary>
-    /// Represents cmsLanguage table entries
+    /// Represents individual cmsLanguage table entries
     /// </summary>
     /// <remarks>
     /// This is basically a copy of the internal Umbraco  class

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Diplo.Dictionary.Models;
 using Diplo.Dictionary.Models.Json;
 using Umbraco.Core.Models;
@@ -30,7 +28,7 @@ namespace Diplo.Dictionary.Extensions
         {
             return new DictLang()
             {
-                CultureName = lang.CultureName,
+                CultureName = !String.IsNullOrEmpty(lang.CultureName) ? lang.CultureName : lang.IsoCode,
                 Id = lang.Id,
                 IsoCode = lang.IsoCode,
                 Key = lang.Key
@@ -97,55 +95,5 @@ namespace Diplo.Dictionary.Extensions
 
             return csvRows.Select(r => r.ToLanguageTextDto());
         }
-
-        /* 
-
-        public static DictionaryItem ToDictionaryItem(this DictItem item)
-        {
-            DictionaryItem value = new DictionaryItem(item.ParentId, item.ItemKey)
-            {
-                UpdateDate = DateTime.Now,
-                Id = item.Id,
-                Translations = item.Translations.ToTranslations()
-            };
-
-            return value;
-        }
-
-        public static Language ToLanguage(this DictLang lang)
-        {
-            Language value = new Language(lang.IsoCode)
-            {
-                Id = lang.Id,
-                CultureName = lang.CultureName,
-                Key = lang.Key,
-                UpdateDate = DateTime.Now
-            };
-
-            return value;
-        }
-
-        public static DictionaryTranslation ToTranslation(this DictTrans trans)
-        {
-            DictionaryTranslation value = new DictionaryTranslation(trans.Language.ToLanguage(), trans.Value)
-            {
-                Id = trans.Id,
-                Key = trans.Key,
-                UpdateDate = DateTime.Now,
-                Language = trans.Language.ToLanguage()
-            };
-
-            return value;
-        }
-
-        public static IEnumerable<DictionaryTranslation> ToTranslations(this IEnumerable<DictTrans> translations)
-        {
-            if (translations == null)
-                return Enumerable.Empty<DictionaryTranslation>();
-
-            return translations.Select(t => t.ToTranslation());
-        }
-
-        */
     }
 }

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Diplo.Dictionary.Models;
 using Diplo.Dictionary.Models.Json;
 
 namespace Diplo.Dictionary.Extensions
@@ -17,9 +15,10 @@ namespace Diplo.Dictionary.Extensions
     public static class CsvExtensions
     {
         /// <summary>
-        /// Exports the dictionary items to a CSV file that can be parsed
+        /// Exports the dictionary items to a flat CSV file
         /// </summary>
         /// <param name="dictionaryItems">The dictionary to convert</param>
+        /// <param name="lang">Optional language Id to limit results to</param>
         /// <returns>The CSV file contents</returns>
         public static string ToCsv(this IEnumerable<DictItem> dictionaryItems, int? lang = null)
         {
@@ -32,12 +31,12 @@ namespace Diplo.Dictionary.Extensions
             {
                 foreach (var item in dict.Translations.Where(l => lang.HasValue && lang.Value == l.Language.Id || lang == null))
                 {
-                    csv.AppendFormat("{0},{1},{2},{3},\"{4}\",\"{5}\"\n", 
-                        item.Id, 
-                        item.Key, 
-                        item.Language.Id, 
-                        item.Language.CultureName, 
-                        dict.ItemKey, 
+                    csv.AppendFormat("{0},{1},{2},{3},\"{4}\",\"{5}\"\n",
+                        item.Id,
+                        item.Key,
+                        item.Language.Id,
+                        item.Language.CultureName,
+                        dict.ItemKey,
                         item.Value?.Replace("\"\"", "\"\"").Replace("\n", "").Trim());
                 }
             }

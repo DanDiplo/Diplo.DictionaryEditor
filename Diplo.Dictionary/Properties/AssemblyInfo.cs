@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Diplo.Dictionary")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Diplo Dictionary Editor")]
+[assembly: AssemblyDescription("Diplo Dictionary Editor for Umbraco")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Diplodocus Squad")]
 [assembly: AssemblyProduct("Diplo.Dictionary")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCopyright("Copyright © Dan Booth  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
