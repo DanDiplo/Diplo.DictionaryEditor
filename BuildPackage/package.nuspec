@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://docs.microsoft.com/en-us/nuget/create-packages/creating-a-package -->
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Diplo.DictionaryEditor</id>
+    <version>1.1.0</version>
+    <title>A Dictionary Editor for Umbraco</title>
+    <authors>Dan Booth</authors>
+    <owners>Dan Booth</owners>
+    <projectUrl>https://www.diplo.co.uk/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+      Diplo Dictionary Editor allows editors to edit existing Dictionary items in Umbraco.
+    </description>
+    <releaseNotes>
+      Initial release
+    </releaseNotes>
+    <summary>
+      Diplo Dictionary Editor is a custom Umbraco section that allows editors to edit existing Dictionary items in Umbraco.
+    </summary>
+    <copyright>Dan Booth</copyright>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <language>en-GB</language>
+    <tags>umbraco umbraco7 developer backoffice translation dictionary</tags>
+    <iconUrl>https://www.diplo.co.uk/images/diplo-logo.png</iconUrl>
+    <dependencies>
+      <dependency id="UmbracoCms.Core" version="7.7.0" />
+    </dependencies>
+  </metadata>
+</package>

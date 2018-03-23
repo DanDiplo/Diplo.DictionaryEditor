@@ -7,6 +7,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diplo.Umbraco", "Diplo.Umbr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diplo.Dictionary", "Diplo.Dictionary\Diplo.Dictionary.csproj", "{45F8AB81-BC9B-4E34-A457-785309855B0E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{2658AF5D-D302-46D1-88ED-42B133E83FBF}"
+	ProjectSection(SolutionItems) = preProject
+		BuildPackage\Build.bat = BuildPackage\Build.bat
+		BuildPackage\Package.build.xml = BuildPackage\Package.build.xml
+		BuildPackage\package.nuspec = BuildPackage\package.nuspec
+		BuildPackage\Package.xml = BuildPackage\Package.xml
+		BuildPackage\readme.txt = BuildPackage\readme.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

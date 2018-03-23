@@ -1,0 +1,80 @@
+﻿<div ng-controller="DiploDictionaryExportController">
+
+    <umb-editor-view footer="false">
+
+        <div class="umb-editor-header umb-panel-header">
+            <div class="umb-panel-header-content-wrapper">
+                <div class="umb-panel-header-content">
+                    <div class="umb-panel-header-left-side">
+
+                        <div class="umb-panel-header-title-wrapper">
+                            <div class="umb-panel-header-name">
+                                Dictionary Exporter
+                            </div>
+
+                            <div class="umb-panel-header-description">
+                                Export dictionary items to CSV
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="umb-panel-header-right-side">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <umb-editor-container>
+
+            <h3>Overview</h3>
+
+            <p>You can export the entire dictionary (or just enteries for a specific language) to a <a href="https://en.wikipedia.org/wiki/Comma-separated_values" target="_blank" title="Comma Separated Values file">CSV file</a> that you can then edit in spreadsheet editing software, such as <a href="https://support.office.com/en-ie/article/import-or-export-text-txt-or-csv-files-5250ac4c-663c-47ce-937b-339e391393ba" target="_blank">Microsoft Excel</a> or <a href="https://support.google.com/docs/answer/40608?co=GENIE.Platform%3DDesktop" target="_blank">Google Sheets</a></p>
+
+            <p>You can then upload the edited CSV file to import it back into Umbraco using the <a href="#/diploDictionaryEdit/diploDictEditor/import/csv">Import Dictionary</a> facility.</p>
+
+            <p>Please select the language you wish to export for or leave at 'All Languages' to export all items:</p>
+
+            <form>
+                <label class="control-label" for="diplo-dict-language">Export for Language:</label>
+                <br />
+                <select ng-model="language" id="diplo-dict-language" ng-options="lang.CultureName for lang in languages">
+                    <option value="">All Languages</option>
+                </select>
+
+                <p>
+                    <a href="/umbraco/backoffice/DiploDictionary/DictionaryCsv/ExportAsCsv?lang={{language.Id}}" class="btn btn-primary" target="_blank">Download CSV File</a>
+                </p>
+
+            </form>
+
+            <hr />
+
+            <h4>Editing Help</h4>
+
+            <ul>
+                <li>
+                    When you download your CSV file it will have exactly six columns - you should <em>only</em> update the last column called <strong>Translation</strong>.
+                    It is very important you leave all other columns <em>exactly</em> as they are otherwise you won't be able to reimport your file.
+                <li>
+                    Only use plain text (ie. don't embed HTML markup and avoid newlines) and keep the text limit to a few hundred characters at most for each entry.
+                </li>
+                <li>
+                    Note that you <em>cannot</em> add new values to the import list - it won't create new entries. It is only for updating existing values.
+                </li>
+                <li>
+                    When you edit your CSV file remember to save it back as CSV (Comma Separated Values) with a <strong>.csv</strong> extension. You can only import .csv and not native Excel sheets.
+                </li>
+                <li>
+                    When uploading an edited file we'll validate the format and reject any bad entries.
+                </li>
+                <li>
+                    Once finished you can use the <a href="#/diploDictionaryEdit/diploDictEditor/import/csv">Import Dictionary</a> option to load it back into Umbraco.
+                </li>
+            </ul>
+
+
+        </umb-editor-container>
+
+    </umb-editor-view>
+</div>

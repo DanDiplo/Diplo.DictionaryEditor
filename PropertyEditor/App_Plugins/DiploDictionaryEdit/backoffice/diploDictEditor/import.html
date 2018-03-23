@@ -1,0 +1,97 @@
+﻿<div ng-controller="DiploDictionaryImportController">
+
+    <umb-editor-view footer="false">
+
+        <div class="umb-editor-header umb-panel-header">
+            <div class="umb-panel-header-content-wrapper">
+                <div class="umb-panel-header-content">
+                    <div class="umb-panel-header-left-side">
+
+                        <div class="umb-panel-header-title-wrapper">
+                            <div class="umb-panel-header-name">
+                                Dictionary Import
+                            </div>
+
+                            <div class="umb-panel-header-description">
+                                Import dictionary from CSV
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="umb-panel-header-right-side">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <umb-editor-container>
+
+            <h3>Overview</h3>
+
+            <p>Here you can import a file you have previously exported using the <a href="#/diploDictionaryEdit/diploDictEditor/export/csv">Export Dictionary</a> facility.</p>
+
+            <p>
+                <strong>Note:</strong> Your file must be in CSV format (ie. it has a <strong>.csv</strong> extension) and must follow the same format as the exported file.
+                It will be validated upon upload and if it doesn't conform to the correct format you will be notified.
+            </p>
+
+            <hr />
+
+            <form>
+                <label class="control-label" for="diploDictCsvFile">Select your CSV file:</label>
+                <input id="diploDictCsvFile" type="file" class="umb-editor umb-textstring" ngf-select="" ng-model="files" ng-multiple="false" ngf-change="fileSelected(files)" accept=".csv" required />
+            </form>
+
+            <button type="button" class="btn btn-success" ng-show="file && !isLoading" ng-click="uploadFile()">Upload CSV</button>
+
+            <umb-load-indicator ng-if="isLoading"></umb-load-indicator>
+
+            <p class="alert alert-info text-center" ng-show="isLoading"><strong><i class="icon icon-activity"></i> Proccessing CSV File.</strong> This may take a little while....</p>
+
+            <div ng-if="response">
+                <div ng-if="response.IsSuccess">
+                    <h4>CSV {{response.Filename}} Successfully Imported</h4>
+
+                    <div class="alert alert-success">
+                        {{response.Update.Message}}
+                    </div>
+                </div>
+
+                <div ng-if="response.Validation.HasErrors">
+                    <h4>Validation Errors ({{response.Validation.Errors.length}})</h4>
+                    <div class="alert alert-error">
+                        {{response.Validation.Message}}
+                    </div>
+                    <p>Please check the following issues we found whilst validating the format of your CSV file:</p>
+                    <ul>
+                        <li ng-repeat="error in response.Validation.Errors track by $index">{{error}}</li>
+                    </ul>
+                </div>
+
+                <div ng-if="response.Update.HasErrors">
+                    <h4>Import Errors ({{response.Update.Errors.length}})</h4>
+                    <div class="alert alert-error">
+                        {{response.Update.Message}}
+                    </div>
+                    <ul>
+                        <li ng-repeat="error in response.Update.Errors track by $index">{{error}}</li>
+                    </ul>
+                </div>
+
+                <div ng-if="response.Update.HasWarnings">
+                    <h4>Import Warnings ({{response.Update.Warnings.length}})</h4>
+                    <div class="alert alert-warning">
+                        Whilst the import was succesfull some items could not be imported (normally this is because the item with the Id no longer exists):
+                    </div>
+                    <ul>
+                        <li ng-repeat="warning in response.Update.Warnings track by $index">{{warning}}</li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </umb-editor-container>
+
+    </umb-editor-view>
+</div>
