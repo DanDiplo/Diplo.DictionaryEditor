@@ -1,7 +1,6 @@
 ﻿(function () {
     'use strict';
     angular.module('umbraco.resources').factory('diploDictionaryResources', function ($q, $http, umbRequestHelper) {
-
         var basePath = "Backoffice/DiploDictionary/DictionaryEditor/";
 
         return {

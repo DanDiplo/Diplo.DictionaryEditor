@@ -75,6 +75,7 @@ namespace Diplo.Dictionary.Controllers
             if (file != null)
             {
                 response.Filename = file.Headers.ContentDisposition.FileName.Trim('\"');
+                
                 string csv = await file.ReadAsStringAsync();
 
                 var csvService = new CsvService(ApplicationContext);

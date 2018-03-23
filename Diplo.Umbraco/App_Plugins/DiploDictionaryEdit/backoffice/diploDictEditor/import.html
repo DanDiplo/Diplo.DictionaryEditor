@@ -20,7 +20,6 @@
 
                     <div class="umb-panel-header-right-side">
                     </div>
-
                 </div>
             </div>
         </div>
@@ -32,7 +31,7 @@
             <p>Here you can import a file you have previously exported using the <a href="#/diploDictionaryEdit/diploDictEditor/export/csv">Export Dictionary</a> facility.</p>
 
             <p>
-                <strong>Note:</strong> Your file must be in CSV format (ie. it has a <strong>.csv</strong> extension) and must follow the same format as the exported file.
+                <strong>Note:</strong> Your file must be in CSV format (ie. it has a <strong>.csv</strong> extension) and must follow the exact same format as the exported file.
                 It will be validated upon upload and if it doesn't conform to the correct format you will be notified.
             </p>
 
@@ -40,7 +39,7 @@
 
             <form>
                 <label class="control-label" for="diploDictCsvFile">Select your CSV file:</label>
-                <input id="diploDictCsvFile" type="file" class="umb-editor umb-textstring" ngf-select="" ng-model="files" ng-multiple="false" ngf-change="fileSelected(files)" accept=".csv" required />
+                <input id="diploDictCsvFile" type="file" class="umb-editor umb-textstring" ngf-select="" ng-model="files" ng-multiple="false" ngf-change="fileSelected(files)" required />
             </form>
 
             <button type="button" class="btn btn-success" ng-show="file && !isLoading" ng-click="uploadFile()">Upload CSV</button>
@@ -52,7 +51,6 @@
             <div ng-if="response">
                 <div ng-if="response.IsSuccess">
                     <h4>CSV {{response.Filename}} Successfully Imported</h4>
-
                     <div class="alert alert-success">
                         {{response.Update.Message}}
                     </div>
@@ -88,10 +86,7 @@
                         <li ng-repeat="warning in response.Update.Warnings track by $index">{{warning}}</li>
                     </ul>
                 </div>
-
             </div>
-
         </umb-editor-container>
-
     </umb-editor-view>
 </div>

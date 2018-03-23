@@ -22,9 +22,14 @@
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
     <language>en-GB</language>
     <tags>umbraco umbraco7 developer backoffice translation dictionary</tags>
-    <iconUrl>https://www.diplo.co.uk/images/diplo-logo.png</iconUrl>
+    <iconUrl>https://www.diplo.co.uk/media/1164/dictionaryeditor.png</iconUrl>
     <dependencies>
       <dependency id="UmbracoCms.Core" version="7.7.0" />
     </dependencies>
   </metadata>
+
+  <files>
+    <file src="readme.txt" target="" />
+  </files>
+  
 </package>

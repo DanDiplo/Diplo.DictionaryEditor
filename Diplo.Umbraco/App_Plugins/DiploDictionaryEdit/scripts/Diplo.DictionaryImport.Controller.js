@@ -3,7 +3,6 @@
 
     angular.module("umbraco").controller("DiploDictionaryImportController",
         function ($scope, $routeParams, notificationsService, diploDictionaryResources) {
-
             $scope.response = null;
             $scope.file = null;
             $scope.isLoading = false;
@@ -15,14 +14,12 @@
 
             $scope.uploadFile = function () {
                 if (!$scope.isLoading) {
-
                     if ($scope.file) {
                         $scope.isLoading = true;
                         $scope.response = null;
 
                         diploDictionaryResources.uploadFileToServer($scope.file)
                             .then(function (response) {
-
                                 $scope.response = response;
 
                                 if (response.IsSuccess) {
@@ -33,9 +30,7 @@
 
                                 $scope.isLoading = false;
                                 $scope.file = null;
-
                             }, function (response) {
-
                                 $scope.response = response;
                                 notificationsService.error("Import Error", "File import failed: " + response.Message);
                                 $scope.isLoading = false;

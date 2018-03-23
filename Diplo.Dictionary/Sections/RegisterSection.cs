@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using Umbraco.Core;
+using Umbraco.Core.Logging;
 using Umbraco.Core.Models;
 
 namespace Diplo.Dictionary.Sections
@@ -21,6 +23,25 @@ namespace Diplo.Dictionary.Sections
 
             // Add a new Dictionary Editor section
             context.Services.SectionService.MakeNew("Diplo Dictionary Editor", DiploConstants.SectionAlias, "icon-umb-translation");
+
+            // Adds access to members of the admin group
+            var adminGroup = context.Services.UserService.GetUserGroupByAlias("admin");
+
+            if (adminGroup != null)
+            {
+                if (!adminGroup.AllowedSections.Contains(DiploConstants.SectionAlias))
+                {
+                    try
+                    {
+                        adminGroup.AddAllowedSection(DiploConstants.SectionAlias);
+                        context.Services.UserService.Save(adminGroup);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogHelper.Error<RegisterSection>($"Could not grant access to {DiploConstants.SectionAlias} to the admin User group...", ex);
+                    }
+                }
+            }
 
             // Attempts to add a new custom dashboard too!
             DashboardConfigurator.UpdateDashboard();
