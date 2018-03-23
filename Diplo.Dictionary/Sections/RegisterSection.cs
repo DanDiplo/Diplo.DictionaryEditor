@@ -6,6 +6,9 @@ using Umbraco.Core.Models;
 
 namespace Diplo.Dictionary.Sections
 {
+    /// <summary>
+    /// Registers the new section, attempts to grant access to it for admins and also attempts to add a dashboard for the intro page
+    /// </summary>
     public class RegisterSection : ApplicationEventHandler
     {
         /// <summary>

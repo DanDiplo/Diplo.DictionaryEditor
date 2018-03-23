@@ -10,10 +10,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{2658AF5D-D302-46D1-88ED-42B133E83FBF}"
 	ProjectSection(SolutionItems) = preProject
 		BuildPackage\Build.bat = BuildPackage\Build.bat
+		BuildPackage\build.txt = BuildPackage\build.txt
 		BuildPackage\Package.build.xml = BuildPackage\Package.build.xml
 		BuildPackage\package.nuspec = BuildPackage\package.nuspec
 		BuildPackage\Package.xml = BuildPackage\Package.xml
-		BuildPackage\readme.txt = BuildPackage\readme.txt
 	EndProjectSection
 EndProject
 Global
