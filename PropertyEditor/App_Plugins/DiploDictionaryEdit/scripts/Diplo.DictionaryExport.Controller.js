@@ -7,6 +7,7 @@
                 $scope.languages = response;
             }, function (response) {
                 notificationsService.error("Error", "Could not load dictionary languages. Ooops.");
+                console.log(response);
             });
         });
 })();

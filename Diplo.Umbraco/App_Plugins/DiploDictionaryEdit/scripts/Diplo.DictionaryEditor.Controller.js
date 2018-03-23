@@ -14,12 +14,14 @@
                 $scope.dictionary = response;
             }, function (response) {
                 notificationsService.error("Error", "Could not load dictionary. Ooops.");
+                console.log(response);
             });
 
             diploDictionaryResources.getLanguages().then(function (response) {
                 $scope.languages = response;
             }, function (response) {
                 notificationsService.error("Error", "Could not load dictionary languages. Ooops.");
+                console.log(response);
             });
 
             $scope.submit = function () {
@@ -35,6 +37,7 @@
                     $scope.isLoading = false;
                 }, function (response) {
                     notificationsService.error("Error", response);
+                    console.log(response);
                     $scope.isLoading = false;
                 });
             };

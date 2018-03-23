@@ -8,7 +8,7 @@
             $scope.isLoading = false;
 
             $scope.fileSelected = function (files) {
-                $scope.file = files; // In this case, files is just a single path/filename
+                $scope.file = files;
                 $scope.response = null;
             };
 
