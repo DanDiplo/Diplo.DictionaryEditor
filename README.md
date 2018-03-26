@@ -1,12 +1,12 @@
 Diplo Dictionary Editor for Umbraco
 ---------------------------------------
 
-This is a custom section for Dictionary values in Umbraco. It allows easy editing of all dictionary items and also allows the dictionary to be exported and imported in CSV format.
+This is a custom section for Dictionary values in [Umbraco CMS](https://umbraco.com/). It allows easy editing of all dictionary items and also allows the dictionary to be exported and imported in CSV format.
 
-Note: It only enables editing of dictionary items and doesn't allow new dictionary items to be created.
+**Note**: It only enables editing of dictionary items and doesn't allow new dictionary items to be created.
 
 Features
----------
+--
 * Created as a custom section so you can grant granular access to it - so only Editors interested in translation can access it, for instance
 * Allows you edit all Dictionary items within a single page using a quick and intuitive interface (powered by AngularJS)
 * Allows sorting the dictionary so that it is either nested or alphabetic
@@ -19,8 +19,10 @@ Features
 * Allows importing a CSV file back
 * For Umbraco 7.7 and up
 
-Important - Please Read
---------------------------
+For more info and screenshots please seemy [blog post](https://www.diplo.co.uk/blog/web-development/diplo-dictionary-editor-for-umbraco/).
+
+Important Installation Instructions - Please Read
+--
 
 This package creates a new custom section in Umbraco called 'Dictionary Editor' when installed. 
 
@@ -44,6 +46,8 @@ Downloads
 ---------
 
 You can download from NuGet at https://www.nuget.org/packages/Diplo.DictionaryEditor/
+
+Or Our Umbraco at https://our.umbraco.org/projects/backoffice-extensions/diplo-dictionary-editor/
 
 More Info
 ---------
