@@ -1,9 +1,0 @@
-﻿{
-  javascript: [
-    "~/App_Plugins/DiploDictionaryEdit/scripts/Diplo.Dictionary.Resources.js",
-    "~/App_Plugins/DiploDictionaryEdit/scripts/Diplo.DictionaryEditor.Controller.js",
-    "~/App_Plugins/DiploDictionaryEdit/scripts/Diplo.DictionaryExport.Controller.js",
-    "~/App_Plugins/DiploDictionaryEdit/scripts/Diplo.DictionaryImport.Controller.js",
-    "~/App_Plugins/DiploDictionaryEdit/scripts/ng-file-upload-all.min.js"
-  ]
-}
