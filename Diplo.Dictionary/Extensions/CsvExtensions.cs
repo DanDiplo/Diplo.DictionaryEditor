@@ -31,7 +31,7 @@ namespace Diplo.Dictionary.Extensions
             {
                 foreach (var item in dict.Translations.Where(l => lang.HasValue && lang.Value == l.Language.Id || lang == null))
                 {
-                    csv.AppendFormat("{0},{1},{2},{3},\"{4}\",\"{5}\"\n",
+                    csv.AppendFormat("{0},{1},{2},\"{3}\",\"{4}\",\"{5}\"\n",
                         item.Id,
                         item.Key,
                         item.Language.Id,
