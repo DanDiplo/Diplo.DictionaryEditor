@@ -1,162 +1,157 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using CsvHelper;
 using Diplo.Dictionary.Extensions;
 using Diplo.Dictionary.Models;
-using Diplo.Dictionary.Models.Json;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using Umbraco.Core;
-using Umbraco.Core.Cache;
-using Umbraco.Core.Models;
-using Umbraco.Core.Persistence;
-using Umbraco.Core.Services;
-using Umbraco.Web;
 
 namespace Diplo.Dictionary.Services
 {
-    public class CsvService
-    {
-        private readonly ApplicationContext appContext;
-        private static readonly string[] NewLineChars = new[] { "\r\n", "\r", "\n" };
-        private static readonly Regex CSVParser = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))", RegexOptions.Compiled); // naive CSV parser
+	public class CsvService
+	{
+		private readonly ApplicationContext appContext;
+		private static readonly string[] NewLineChars = new[] { "\r\n", "\r", "\n" };
+		private static readonly Regex CSVParser = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))", RegexOptions.Compiled); // naive CSV parser
 
-        /// <summary>
-        /// Instantiate the CSV Service from the Application Context
-        /// </summary>
-        /// <param name="applicationContext">The Umbraco Application Context</param>
-        public CsvService(ApplicationContext applicationContext)
-        {
-            this.appContext = applicationContext ?? throw new ArgumentNullException(nameof(applicationContext));
-        }
+		/// <summary>
+		/// Instantiate the CSV Service from the Application Context
+		/// </summary>
+		/// <param name="applicationContext">The Umbraco Application Context</param>
+		public CsvService(ApplicationContext applicationContext)
+		{
+			this.appContext = applicationContext ?? throw new ArgumentNullException(nameof(applicationContext));
+		}
 
-        /// <summary>
-        /// Exports entire dictionary to CSV
-        /// </summary>
-        /// <returns>A string containg the CSV items</returns>
-        public string ExportDictionaryToCsv()
-        {
-            var dictionaryService = new DictionaryDataService(appContext);
+		/// <summary>
+		/// Empty constructor for tests
+		/// </summary>
+		public CsvService() { }
 
-            var csv = dictionaryService.GetAllDictionaryItemsSorted().ToCsv();
+		/// <summary>
+		/// Exports entire dictionary to CSV
+		/// </summary>
+		/// <returns>A string containg the CSV items</returns>
+		public string ExportDictionaryToCsv()
+		{
+			var dictionaryService = new DictionaryDataService(appContext);
 
-            return csv;
-        }
+			var csv = dictionaryService.GetAllDictionaryItemsSorted().ToCsv();
 
-        /// <summary>
-        /// Validates the passed CSV to ensure it is the correct format
-        /// </summary>
-        /// <remarks>
-        /// This validates the format and not whether the items exist
-        /// </remarks>
-        /// <param name="csv">The CSV to validate</param>
-        /// <returns>A response</returns>
-        public ValidationResponse ValidateCsv(string csv)
-        {
-            if (String.IsNullOrEmpty(csv))
-            {
-                return new ValidationResponse()
-                {
-                    Message = "The CSV file didn't contain any data so cannot be parsed"
-                };
-            }
+			return csv;
+		}
 
-            ValidationResponse response = new ValidationResponse();
+		/// <summary>
+		/// Validates the passed CSV to ensure it is the correct format
+		/// </summary>
+		/// <remarks>
+		/// This validates the format and not whether the items exist
+		/// </remarks>
+		/// <param name="csv">The CSV to validate</param>
+		/// <returns>A response</returns>
+		public ValidationResponse ValidateCsv(string csv)
+		{
+			if (String.IsNullOrEmpty(csv))
+			{
+				return new ValidationResponse()
+				{
+					Message = "The CSV file didn't contain any data so cannot be parsed"
+				};
+			}
 
-            var rows = csv.Split(NewLineChars, StringSplitOptions.RemoveEmptyEntries).Skip(1).ToList();
-            response.RowsFound = rows.Count();
-            response.CsvRows = new List<CsvRow>(response.RowsFound);
+			ValidationResponse response = new ValidationResponse();
+			response.CsvRows = new List<CsvRow>(response.RowsFound);
 
-            int i = 1;
+			int i = 0;
 
-            foreach (var line in rows)
-            {
-                var columns = CSVParser.Split(line);
-                int columnCount = columns.Count();
+			using (var reader = new StringReader(csv))
+			using (var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture))
+			{
+				csvReader.Read();
+				csvReader.ReadHeader();
+				while (csvReader.Read())
+				{
+					CsvRow row = new CsvRow();
 
-                if (columns.Count() != 6)
-                {
-                    response.Errors.Add($"The CSV line at row {i} contained {columnCount} columns where it should have contained 6.");
-                }
-                else
-                {
-                    CsvRow row = new CsvRow();
+					if (int.TryParse(csvReader.GetField<string>(0), out int id))
+					{
+						row.Id = id;
+					}
+					else
+					{
+						response.Errors.Add($"The CSV line at row {i} for column 'Id' didn't contain a number as expected - it contained '{csvReader.GetField<string>(0)}'.");
+					}
 
-                    if (int.TryParse(columns[0].Trim("\""), out int id))
-                    {
-                        row.Id = id;
-                    }
-                    else
-                    {
-                        response.Errors.Add($"The CSV line at row {i} for column 'Id' didn't contain a number as expected - it contained '{columns[0]}'.");
-                    }
+					if (Guid.TryParse(csvReader.GetField<string>(1), out Guid guid))
+					{
+						row.Key = guid;
+					}
+					else
+					{
+						response.Errors.Add($"The CSV line at row {i} for column 'Key' didn't contain a GUID as expected - it contained '{csvReader.GetField<string>(1)}'.");
+					}
 
-                    if (Guid.TryParse(columns[1].Trim("\""), out Guid guid))
-                    {
-                        row.Key = guid;
-                    }
-                    else
-                    {
-                        response.Errors.Add($"The CSV line at row {i} for column 'Key' didn't contain a GUID as expected - it contained '{columns[1]}'.");
-                    }
+					if (int.TryParse(csvReader.GetField<string>(2), out id))
+					{
+						row.LangId = id;
+					}
+					else
+					{
+						response.Errors.Add($"The CSV line at row {i} for column 'LangId' didn't contain a number as expected - it contained '{csvReader.GetField<string>(2)}'.");
+					}
 
-                    if (int.TryParse(columns[2].Trim("\""), out id))
-                    {
-                        row.LangId = id;
-                    }
-                    else
-                    {
-                        response.Errors.Add($"The CSV line at row {i} for column 'LangId' didn't contain a number as expected - it contained '{columns[2]}'.");
-                    }
+					row.Language = csvReader.GetField<string>(3).Trim("\"");
+					row.Name = csvReader.GetField<string>(4).Trim("\"");
+					row.Translation = csvReader.GetField<string>(5).Trim("\"");
 
-                    row.Language = columns[3].Trim("\"");
-                    row.Name = columns[4].Trim("\"");
-                    row.Translation = columns[5].Trim("\"");
+					response.CsvRows.Add(row);
 
-                    response.CsvRows.Add(row);
-                }
+					i++;
+				}
+			}
 
-                i++;
-            }
+			response.RowsFound = i;
 
-            if (response.Errors.Any())
-            {
-                response.IsValid = false;
-                response.Message = "Your CSV file had a number of errors trying to read the file.";
-            }
-            else
-            {
-                response.IsValid = true;
-            }
+			if (response.Errors.Any())
+			{
+				response.IsValid = false;
+				response.Message = "Your CSV file had a number of errors trying to read the file.";
+			}
+			else
+			{
+				response.IsValid = true;
+			}
 
-            return response;
-        }
+			return response;
+		}
 
-        /// <summary>
-        /// Imports the CSV dictionary back into Umbraco
-        /// </summary>
-        /// <param name="csv">The CSV entries</param>
-        /// <returns></returns>
-        public ImportResponse ImportCsv(string csv)
-        {
-            ImportResponse response = new ImportResponse
-            {
-                Validation = this.ValidateCsv(csv)
-            };
+		/// <summary>
+		/// Imports the CSV dictionary back into Umbraco
+		/// </summary>
+		/// <param name="csv">The CSV entries</param>
+		/// <returns></returns>
+		public ImportResponse ImportCsv(string csv)
+		{
+			ImportResponse response = new ImportResponse
+			{
+				Validation = this.ValidateCsv(csv)
+			};
 
-            if (!response.Validation.IsValid)
-            {
-                return response;
-            }
+			if (!response.Validation.IsValid)
+			{
+				return response;
+			}
 
-            var dtos = response.Validation.CsvRows.ToLanguageTextDtos();
+			var dtos = response.Validation.CsvRows.ToLanguageTextDtos();
 
-            var dictionaryService = new DictionaryDataService(appContext);
+			var dictionaryService = new DictionaryDataService(appContext);
 
-            response.Update = dictionaryService.UpdateDtoItems(dtos);
+			response.Update = dictionaryService.UpdateDtoItems(dtos);
 
-            return response;
-        }
-    }
+			return response;
+		}
+	}
 }
